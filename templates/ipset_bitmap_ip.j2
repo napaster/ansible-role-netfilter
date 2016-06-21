@@ -1,0 +1,6 @@
+{% if s.range is defined and s.range | ipaddr('net') %}
+{{ 'create ' + s.set + ' ' + s.type + ' range ' + s.range -}}
+{% endif %}
+{% if s.netmask is defined and s.netmask != '' %}
+{{- ' netmask ' + s.netmask -}}
+{% endif %}

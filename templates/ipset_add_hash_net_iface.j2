@@ -1,0 +1,3 @@
+{% if e.data | ipaddr() and (e.iface is defined and e.iface != '') %}
+{{ 'add ' + s.set + ' ' + e.data + ',' + e.iface -}}
+{% endif %}

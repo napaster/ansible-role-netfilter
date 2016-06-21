@@ -1,0 +1,12 @@
+{% if s.timeout is defined and s.timeout != '' %}
+{{- ' timeout ' + s.timeout -}}
+{% endif %}
+{% if s.counters is defined and s.counters == 'true' %}
+{{- ' counters' -}}
+{% endif %}
+{% if s.comment is defined and s.comment == 'true' %}
+{{- ' comment' -}}
+{% endif %}
+{% if s.skbinfo is defined and s.skbinfo == 'true' %}
+{{- ' skbinfo' -}}
+{% endif %}

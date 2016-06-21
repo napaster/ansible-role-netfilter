@@ -1,0 +1,7 @@
+---
+netfilter_iptables_service: 'iptables'
+netfilter_iptables_dest: '/etc/sysconfig'
+netfilter_iptables_conf: 'iptables'
+netfilter_ipset_service: 'ipset'
+netfilter_ipset_dest: '/etc/sysconfig'
+netfilter_ipset_conf: 'ipset'

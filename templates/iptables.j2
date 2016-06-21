@@ -1,0 +1,20 @@
+## {{ hostvars[inventory_hostname]['netfilter_iptables_conf'] }}
+# {{ ansible_managed }}
+# Do not edit manually
+
+{% for t in netfilter_iptables %}
+{{ '*' + t.table }}
+{% for c in t.chains %}
+{% if c.action is defined %}
+{{ ':' + c.name + ' ' + c.action + ' [0:0]' }}
+{% else %}
+{{ ':' + c.name + ' ACCEPT' + ' [0:0]' }}
+{% endif %}
+{% if c.rules is defined %}
+{% for r in c.rules %}
+{{ '-A ' + r }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+COMMIT
+{% endfor %}

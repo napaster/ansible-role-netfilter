@@ -1,0 +1,4 @@
+{{ 'create ' + s.set + ' ' + s.type -}}
+{% if s.family is defined and s.family != '' %}
+{{- ' family ' + s.family -}}
+{% endif %}

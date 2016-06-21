@@ -1,0 +1,10 @@
+{% if s.hashsize is defined and s.hashsize != '' %}
+{{- ' hashsize ' + s.hashsize -}}
+{% else %}
+{{- ' hashsize ' + '1024' -}}
+{% endif -%}
+{% if s.maxelem is defined and s.maxelem != '' %}
+{{- ' maxelem ' + s.maxelem -}}
+{% else %}
+{{- ' maxelem ' + '65536' -}}
+{% endif %}

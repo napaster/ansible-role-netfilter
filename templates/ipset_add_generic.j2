@@ -1,0 +1,21 @@
+{% if e.timeout is defined and e.timeout != '' %}
+{{- ' timeout ' + e.timeout -}}
+{% endif %}
+{% if e.packets is defined and e.packets != '' %}
+{{- ' packets ' + e.packets -}}
+{% endif %}
+{% if e.bytes is defined and e.bytes != '' %}
+{{- ' bytes ' + e.bytes -}}
+{% endif %}
+{% if e.comment is defined and e.comment != '' %}
+{{- ' comment ' + '\"' + e.comment + '\"' -}}
+{% endif %}
+{% if e.skbmark is defined and e.skbmark != '' %}
+{{- ' skbmark ' + e.skbmark -}}
+{% endif %}
+{% if e.skbprio is defined and e.skbprio != '' %}
+{{- ' skbprio ' + e.skbprio -}}
+{% endif %}
+{% if e.skbqueue is defined and e.skbqueue != '' %}
+{{- ' skbqueue ' + e.skbqueue -}}
+{% endif %}

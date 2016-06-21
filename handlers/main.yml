@@ -1,0 +1,21 @@
+---
+- name: Enable ipset
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_ipset_service'] }}"
+    enabled: 'yes'
+  when: "ipset_deploy_result|success and hostvars[inventory_hostname]['netfilter_ipset_enable'] == 'true'"
+- name: Restart ipset
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_ipset_service'] }}"
+    state: 'restarted'
+  when: "ipset_deploy_result|success and hostvars[inventory_hostname]['netfilter_ipset_restart'] == 'true'"
+- name: Enable iptables
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
+    enabled: 'yes'
+  when: "iptables_deploy_result|success and hostvars[inventory_hostname]['netfilter_iptables_enable'] == 'true'"
+- name: Restart iptables
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
+    state: 'restarted'
+  when: "iptables_deploy_result|success and hostvars[inventory_hostname]['netfilter_iptables_restart'] == 'true'"

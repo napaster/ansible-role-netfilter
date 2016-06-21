@@ -1,0 +1,31 @@
+## {{ hostvars[inventory_hostname]['netfilter_ipset_conf'] }}
+# {{ ansible_managed }}
+# Do not edit manually
+
+destroy
+{% for s in netfilter_ipset %}
+{% if s.type == 'bitmap:ip' %}{%- include 'ipset_bitmap_ip.j2' -%}
+{% elif s.type == 'bitmap:ip,mac' %}{%- include 'ipset_bitmap_ip_mac.j2' -%}
+{% elif s.type == 'bitmap:port' %}{%- include 'ipset_bitmap_port.j2' -%}
+{% elif s.type == 'hash:ip' %}{%- include 'ipset_hash_ip.j2' -%}{%- include 'ipset_hash_generic.j2' -%}
+{% elif s.type == 'hash:mac' %}{%- include 'ipset_hash_mac.j2' -%}{%- include 'ipset_hash_generic.j2' -%}
+{% elif s.type == 'hash:net' %}{%- include 'ipset_hash_net.j2' -%}{%- include 'ipset_hash_generic.j2' -%}
+{% elif s.type == 'hash:net,iface' %}{%- include 'ipset_hash_net_iface.j2' -%}{%- include 'ipset_hash_generic.j2' -%}
+{% endif %}
+{% include 'ipset_generic.j2' %}
+
+{% if s.entry is defined %}
+{% for e in s.entry %}
+{% if s.type == 'bitmap:ip' %}{%- include 'ipset_add_bitmap_ip.j2' -%}
+{% elif s.type == 'bitmap:ip,mac' %}{%- include 'ipset_add_bitmap_ip_mac.j2' -%}
+{% elif s.type == 'bitmap:port' %}{%- include 'ipset_add_bitmap_port.j2' -%}
+{% elif s.type == 'hash:ip' %}{%- include 'ipset_add_hash_ip.j2' -%}
+{% elif s.type == 'hash:mac' %}{%- include 'ipset_add_hash_mac.j2' -%}
+{% elif s.type == 'hash:net' %}{%- include 'ipset_add_hash_net.j2' -%}
+{% elif s.type == 'hash:net,iface' %}{%- include 'ipset_add_hash_net_iface.j2' -%}
+{% endif %}
+{% include 'ipset_add_generic.j2' %}
+
+{% endfor %}
+{% endif %}
+{% endfor %}
