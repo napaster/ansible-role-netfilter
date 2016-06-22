@@ -45,15 +45,15 @@ Extra
 
 You can enable/disable iptables or netfilter management by this role via vars:
 
-* netfilter_iptables_mgmt, default is **true**
-* netfilter_ipset_mgmt, default is **true**
+* **netfilter_iptables_mgmt**, *default is true*
+* **netfilter_ipset_mgmt**, *default is true*
 
 Behavior of handlers rule by variables:
 
-* netfilter_iptables_enable, default is **false**
-* netfilter_iptables_restart, default is **false**
-* netfilter_ipset_enable, default is **false**
-* netfilter_ipset_restart, default is **false**
+* **netfilter_iptables_enable**, *default is false*
+* **netfilter_iptables_restart**, *default is false*
+* **netfilter_ipset_enable**, *default is false*
+* **netfilter_ipset_restart**, *default is false*
 
 **data** field in entry of ip sets - this is field for any kind of ip/cidr/net
 addresses.
@@ -65,6 +65,7 @@ This example provide all possible options for ipset. Also is describe how to
 use iptables tables and chains.
 
 ```yaml
+---
 netfilter_iptables_mgmt: 'true'
 netfilter_iptables_enable: 'false'
 netfilter_iptables_restart: 'false'
