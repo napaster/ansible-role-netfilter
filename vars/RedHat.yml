@@ -5,3 +5,8 @@ netfilter_iptables_conf: 'iptables'
 netfilter_ipset_service: 'ipset'
 netfilter_ipset_dest: '/etc/sysconfig'
 netfilter_ipset_conf: 'ipset'
+netfilter_packages:
+- 'iptables'
+- 'iptables-services'
+- 'ipset'
+- 'ipset-service'

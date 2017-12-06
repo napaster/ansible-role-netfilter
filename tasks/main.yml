@@ -1,29 +1,12 @@
 ---
-- name: Add the OS specific variables
-  include_vars: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
-- name: Deploy ip sets
-  template:
-    src: "ipset.j2"
-    dest: "{{ hostvars[inventory_hostname]['netfilter_ipset_dest'] + '/' + hostvars[inventory_hostname]['netfilter_ipset_conf'] }}"
-    group: "root"
-    owner: "root"
-    mode: "0644"
-  when: "hostvars[inventory_hostname]['netfilter_ipset_mgmt'] is defined and hostvars[inventory_hostname]['netfilter_ipset_mgmt'] == 'true'"
-  register: "ipset_deploy_result"
-  notify:
-    - 'Enable ipset'
-    - 'Restart ipset'
-- meta: flush_handlers
-- name: Deploy iptables rules
-  template:
-    src: "iptables.j2"
-    dest: "{{ hostvars[inventory_hostname]['netfilter_iptables_dest'] + '/' + hostvars[inventory_hostname]['netfilter_iptables_conf'] }}"
-    group: "root"
-    owner: "root"
-    mode: "0644"
-    validate: "iptables-restore --test %s"
-  when: "hostvars[inventory_hostname]['netfilter_iptables_mgmt'] is defined and hostvars[inventory_hostname]['netfilter_iptables_mgmt'] == 'true'"
-  register: "iptables_deploy_result"
-  notify:
-    - 'Enable iptables'
-    - 'Restart iptables'
+- include: pre_requisite.yml
+- include: packages.yml
+  when:
+  - "hostvars[inventory_hostname]['netfilter_install_package'] is defined"
+  - "hostvars[inventory_hostname]['netfilter_install_package'] != ''"
+- include: deploy_ipset.yml
+  when:
+  - "vars['netfilter_ipset'] is defined"
+- include: deploy_iptables.yml
+  when:
+  - "vars['netfilter_iptables'] is defined"

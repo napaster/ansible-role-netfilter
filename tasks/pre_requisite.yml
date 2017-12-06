@@ -1,0 +1,10 @@
+---
+- name: netfilter | Add the OS specific variables
+  include_vars: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+- name: netfilter | Set local facts
+  set_fact:
+    netfilter_ipset: "{{ hostvars[inventory_hostname]['netfilter'] | json_query('[].ipset[]') }}"
+    netfilter_iptables: "{{ hostvars[inventory_hostname]['netfilter'] | json_query('[].iptables[]') }}"
+  when:
+  - "hostvars[inventory_hostname]['netfilter'] is defined"
+  - "hostvars[inventory_hostname]['netfilter'] != ''"

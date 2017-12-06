@@ -1,8 +1,8 @@
-## {{ hostvars[inventory_hostname]['netfilter_iptables_conf'] }}
-# {{ ansible_managed }}
-# Do not edit manually
+{{ '## ' + hostvars[inventory_hostname]['netfilter_iptables_conf'] }}
+{{ '# ' + ansible_managed }}
+{{ '# ' + 'Do not edit manually' }}
 
-{% for t in netfilter_iptables %}
+{% for t in vars['netfilter_iptables'] %}
 {{ '*' + t.table }}
 {% for c in t.chains %}
 {% if c.action is defined %}
@@ -15,6 +15,8 @@
 {{ '-A ' + r }}
 {% endfor %}
 {% endif %}
+{% if loop.last %}
+{{ 'COMMIT' }}
+{% endif %}
 {% endfor %}
-COMMIT
 {% endfor %}

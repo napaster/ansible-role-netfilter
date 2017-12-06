@@ -5,3 +5,6 @@ netfilter_iptables_conf: 'iptables.rules'
 netfilter_ipset_service: 'ipset'
 netfilter_ipset_dest: '/etc'
 netfilter_ipset_conf: 'ipset.conf'
+netfilter_packages:
+- 'iptables'
+- 'ipset'

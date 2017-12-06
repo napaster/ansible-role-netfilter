@@ -1,0 +1,21 @@
+---
+- name: netfilter | Deploy iptables rules
+  template:
+    src: "iptables.j2"
+    dest: "{{ hostvars[inventory_hostname]['netfilter_iptables_dest'] + '/' + hostvars[inventory_hostname]['netfilter_iptables_conf'] }}"
+    group: "root"
+    owner: "root"
+    mode: "0644"
+    validate: "iptables-restore --test %s"
+  notify: "Restart iptables"
+  when:
+  - "hostvars[inventory_hostname]['netfilter_iptables_mgmt'] is defined"
+  - "hostvars[inventory_hostname]['netfilter_iptables_mgmt'] == 'true'"
+- name: netfilter | Enable iptables
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
+    enabled: "yes"
+  when:
+  - "hostvars[inventory_hostname]['netfilter_iptables_enable'] is defined"
+  - "hostvars[inventory_hostname]['netfilter_iptables_enable'] == 'true'"
+- meta: flush_handlers
