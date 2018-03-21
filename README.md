@@ -1,29 +1,24 @@
-ansible-role-netfilter
-==========================
+# ansible-role-netfilter
 
 Role for deploy ipset and iptables (sets and rules).
 
+## Requirements
 
-Requirements
----------------
-
-* Ansible 2.2;
+* Ansible 2.4;
 * jmespath;
 * [python-netaddr](//docs.ansible.com/ansible/playbooks_filters_ipaddr.html);
 * GNU/Linux with netfilter support;
 * iptables-restore with '--test' support;
 * iptables/ipset - restore/destroy by init (flawless work with systemd);
 
-About iptables
--------------------
+## About iptables
 
 This is very simple implementation. Yes, can create a dictionary and check the
 validity of the ip/cidr/mac, but for large instances one iptables string grows
 to ~10 key-value strings. Who can read iptables rules natively, like it. Before
 saving to disk, syntax check is performed.
 
-About ipset support
------------------------
+## About ipset support
 
 For now support sets with their 'special options':
 
@@ -38,31 +33,29 @@ For now support sets with their 'special options':
 Unfortunately, I don't know how to check ipset syntax (is there a way?). Before
 deploy ip/cidr/mac will check by python-netaddr library.
 
-Extra
------------
+## Extra
 
 You can enable/disable iptables or netfilter management by this role via vars:
 
-* **netfilter_iptables_mgmt**, *default is true*
-* **netfilter_ipset_mgmt**, *default is true*
+* `netfilter_iptables_mgmt` - default is true
+* `netfilter_ipset_mgmt` - default is true
 
 Behavior of handlers rule by variables:
 
-* **netfilter_iptables_enable**, *default is false*
-* **netfilter_iptables_restart**, *default is false*
-* **netfilter_ipset_enable**, *default is false*
-* **netfilter_ipset_restart**, *default is false*
+* `netfilter_iptables_enable` - default is false
+* `netfilter_iptables_restart` - default is false
+* `netfilter_ipset_enable` - default is false
+* `netfilter_ipset_restart` - default is false
 
-**data** field in entry of ip sets - this is field for any kind of ip/cidr/net
+`data` field in entry of ip sets - this is field for any kind of ip/cidr/net
 addresses.
 
-**netfilter_install_package** - install iptables/ipset packages or not.
+`netfilter_install_package` - install iptables/ipset packages or not.
 
-Example configuration
--------------------------
+## Example configuration
 
-This example provide all possible options for ipset. Also is describe how to
-use iptables tables and chains.
+This example provide all possible options for `ipset`. Also is describe how to
+use `iptables` tables and chains.
 
 ```yaml
 ---

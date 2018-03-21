@@ -2,14 +2,16 @@
 - name: netfilter | Deploy ip sets
   template:
     src: "ipset.j2"
-    dest: "{{ hostvars[inventory_hostname]['netfilter_ipset_dest'] + '/' + hostvars[inventory_hostname]['netfilter_ipset_conf'] }}"
+    dest: "{{ hostvars[inventory_hostname]['netfilter_ipset_dest'] + '/' +
+              hostvars[inventory_hostname]['netfilter_ipset_conf'] }}"
     group: "root"
     owner: "root"
     mode: "0644"
   when:
   - "hostvars[inventory_hostname]['netfilter_ipset_mgmt'] is defined"
   - "hostvars[inventory_hostname]['netfilter_ipset_mgmt'] == 'true'"
-  notify: "Restart ipset"
+  notify:
+  - "Restart ipset"
 - name: netfilter | Enable ipset
   service:
     name: "{{ hostvars[inventory_hostname]['netfilter_ipset_service'] }}"
