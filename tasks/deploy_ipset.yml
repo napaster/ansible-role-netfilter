@@ -3,7 +3,7 @@
   template:
     src: "ipset.j2"
     dest: "{{ hostvars[inventory_hostname]['netfilter_ipset_dest'] + '/' +
-              hostvars[inventory_hostname]['netfilter_ipset_conf'] }}"
+      hostvars[inventory_hostname]['netfilter_ipset_conf'] }}"
     group: "root"
     owner: "root"
     mode: "0644"

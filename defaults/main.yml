@@ -6,3 +6,4 @@ netfilter_ipset_mgmt: 'true'
 netfilter_ipset_enable: 'false'
 netfilter_ipset_restart: 'false'
 netfilter_install_package: 'true'
+netfilter: []

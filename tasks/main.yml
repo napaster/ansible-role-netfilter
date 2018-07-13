@@ -1,9 +1,9 @@
 ---
-- include_tasks: pre_requisite.yml
+- import_tasks: pre_requisite.yml
 - include_tasks: packages.yml
   when:
   - "hostvars[inventory_hostname]['netfilter_install_package'] is defined"
-  - "hostvars[inventory_hostname]['netfilter_install_package'] != ''"
+  - "hostvars[inventory_hostname]['netfilter_install_package'] == 'true'"
 - include_tasks: deploy_ipset.yml
   when:
   - "vars['netfilter_ipset'] is defined"

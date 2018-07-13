@@ -4,9 +4,7 @@ Role for deploy ipset and iptables (sets and rules).
 
 ## Requirements
 
-* Ansible 2.4;
-* jmespath;
-* [python-netaddr](//docs.ansible.com/ansible/playbooks_filters_ipaddr.html);
+* Ansible 2.5+;
 * GNU/Linux with netfilter support;
 * iptables-restore with '--test' support;
 * iptables/ipset - restore/destroy by init (flawless work with systemd);

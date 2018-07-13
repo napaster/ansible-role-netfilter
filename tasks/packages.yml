@@ -3,7 +3,7 @@
   yum:
     name: "{{ item }}"
     state: "installed"
-  with_items: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'RedHat'"
 - name: netfilter | Install the required packages in Debian derivatives
@@ -11,7 +11,7 @@
     name: "{{ item }}"
     state: "installed"
     update_cache: "yes"
-  with_items: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'Debian'"
 - name: netfilter | Install the required packages in ArchLinux derivatives
@@ -19,6 +19,6 @@
     name: "{{ item }}"
     state: "installed"
     update_cache: "yes"
-  with_items: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'Archlinux'"
