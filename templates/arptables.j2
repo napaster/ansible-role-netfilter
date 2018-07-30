@@ -1,14 +1,14 @@
-{{ '## ' + hostvars[inventory_hostname]['netfilter_iptables_conf'] }}
+{{ '## ' + hostvars[inventory_hostname]['netfilter_arptables_conf'] }}
 {{ '# ' + ansible_managed }}
 {{ '# ' + 'Do not edit manually' }}
 
-{% for t in vars['netfilter_iptables'] %}
+{% for t in vars['netfilter_arptables'] %}
 {{ '*' ~ t.table }}
 {% for c in t.chains %}
 {% if c.policy is defined %}
-{{ ':' ~ c.name ~ ' ' ~ c.policy ~ ' ' ~ '[0:0]' }}
+{{ ':' ~ c.name ~ ' ' ~ c.policy }}
 {% else %}
-{{ ':' ~ c.name ~ ' ' ~ 'ACCEPT' ~ ' ' ~ '[0:0]' }}
+{{ ':' ~ c.name ~ ' ' ~ 'ACCEPT' }}
 {% endif %}
 {% if c.rules is defined %}
 {% for r in c.rules %}
@@ -16,9 +16,6 @@
 {{ '-A' ~ ' ' ~ r }}
 {% endif %}
 {% endfor %}
-{% endif %}
-{% if loop.last %}
-{{ 'COMMIT' }}
 {% endif %}
 {% endfor %}
 {% endfor %}

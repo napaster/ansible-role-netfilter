@@ -1,0 +1,35 @@
+---
+- name: netfilter | Deploy arptables rules
+  template:
+    src: "arptables.j2"
+    dest: "{{ hostvars[inventory_hostname]['netfilter_arptables_dest'] + '/' +
+      hostvars[inventory_hostname]['netfilter_arptables_conf'] }}"
+    group: "root"
+    owner: "root"
+    mode: "0644"
+  when:
+  - "hostvars[inventory_hostname]['netfilter'] is defined"
+  - "hostvars[inventory_hostname]['netfilter'] != ''"
+  - "hostvars[inventory_hostname]['netfilter'] |
+     json_query(vars['netfilter_arptables_mgmt']) is defined"
+  - "hostvars[inventory_hostname]['netfilter'] |
+     json_query(vars['netfilter_arptables_mgmt']) == 'true'"
+  vars:
+    netfilter_arptables_mgmt: "[] | map(&arptables_mgmt || 'false', @) | [0]"
+  notify:
+  - "Restart arptables"
+- name: netfilter | Enable arptables
+  service:
+    name: "{{ hostvars[inventory_hostname]['netfilter_arptables_service'] }}"
+    enabled: "yes"
+  when:
+  - "hostvars[inventory_hostname]['netfilter'] is defined"
+  - "hostvars[inventory_hostname]['netfilter'] != ''"
+  - "hostvars[inventory_hostname]['netfilter'] |
+     json_query(vars['netfilter_arptables_enable']) is defined"
+  - "hostvars[inventory_hostname]['netfilter'] |
+     json_query(vars['netfilter_arptables_enable']) == 'true'"
+  vars:
+    netfilter_arptables_enable: "[] |
+      map(&arptables_enable || 'false', @) | [0]"
+- meta: flush_handlers

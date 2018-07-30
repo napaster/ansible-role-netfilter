@@ -1,3 +1,3 @@
-{% if e.macaddr is defined and e.macaddr| hwaddr() %}
+{% if e.macaddr is defined and e.macaddr | hwaddr() %}
 {{ 'add ' + s.set + ' ' + e.macaddr -}}
 {% endif %}
