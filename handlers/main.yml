@@ -1,43 +1,43 @@
 ---
 - name: Restart ipset
-  service:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_ipset_service'] }}"
     state: "restarted"
   when:
   - "hostvars[inventory_hostname]['netfilter'] is defined"
   - "hostvars[inventory_hostname]['netfilter'] != ''"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_ipset_restart']) is defined"
+     community.general.json_query(vars['netfilter_ipset_restart']) is defined"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_ipset_restart']) == 'true'"
+     community.general.json_query(vars['netfilter_ipset_restart']) == 'true'"
   vars:
     netfilter_ipset_restart: "[] |
       map(&ipset_restart || 'false', @) | [0]"
 - name: Restart iptables
-  service:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
     state: "restarted"
   when:
   - "hostvars[inventory_hostname]['netfilter'] is defined"
   - "hostvars[inventory_hostname]['netfilter'] != ''"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_restart']) is defined"
+     community.general.json_query(vars['netfilter_iptables_restart']) is defined"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_restart']) == 'true'"
+     community.general.json_query(vars['netfilter_iptables_restart']) == 'true'"
   vars:
     netfilter_iptables_restart: "[] |
       map(&iptables_restart || 'false', @) | [0]"
 - name: Restart arptables
-  service:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_arptables_service'] }}"
     state: "restarted"
   when:
   - "hostvars[inventory_hostname]['netfilter'] is defined"
   - "hostvars[inventory_hostname]['netfilter'] != ''"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_arptables_restart']) is defined"
+     community.general.json_query(vars['netfilter_arptables_restart']) is defined"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_arptables_restart']) == 'true'"
+     community.general.json_query(vars['netfilter_arptables_restart']) == 'true'"
   vars:
     netfilter_arptables_restart: "[] |
       map(&arptables_restart || 'false', @) | [0]"

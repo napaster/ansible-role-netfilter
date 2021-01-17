@@ -1,24 +1,33 @@
 ---
 - name: netfilter | Install the required packages in Redhat derivatives
-  yum:
-    name: "{{ item }}"
-    state: "installed"
-  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+  block:
+  - name: netfilter | Install the required packages for RedHat via yum
+    ansible.builtin.yum:
+      name: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+      state: "present"
+      update_cache: "yes"
+    when:
+    - "hostvars[inventory_hostname]['ansible_pkg_mgr'] == 'yum'"
+  - name: netfilter | Install the required packages for RedHat via dnf
+    ansible.builtin.dnf:
+      name: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+      state: "present"
+      update_cache: "yes"
+    when:
+    - "hostvars[inventory_hostname]['ansible_pkg_mgr'] == 'dnf'"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'RedHat'"
 - name: netfilter | Install the required packages in Debian derivatives
-  apt:
-    name: "{{ item }}"
-    state: "installed"
+  ansible.builtin.apt:
+    name: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+    state: "present"
     update_cache: "yes"
-  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'Debian'"
 - name: netfilter | Install the required packages in ArchLinux derivatives
-  pacman:
-    name: "{{ item }}"
-    state: "installed"
+  community.general.pacman:
+    name: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
+    state: "present"
     update_cache: "yes"
-  loop: "{{ hostvars[inventory_hostname]['netfilter_packages'] }}"
   when:
   - "hostvars[inventory_hostname]['ansible_os_family'] == 'Archlinux'"

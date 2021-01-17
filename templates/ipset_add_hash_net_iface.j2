@@ -1,3 +1,4 @@
-{% if e.data | ipaddr() and (e.iface is defined and e.iface != '') %}
+{% if e.data | ansible.netcommon.ipaddr() and
+  (e.iface is defined and e.iface != '') %}
 {{ 'add ' + s.set + ' ' + e.data + ',' + e.iface -}}
 {% endif %}

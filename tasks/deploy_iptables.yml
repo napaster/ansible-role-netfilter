@@ -1,6 +1,6 @@
 ---
 - name: netfilter | Deploy iptables rules
-  template:
+  ansible.builtin.template:
     src: "iptables.j2"
     dest: "{{ hostvars[inventory_hostname]['netfilter_iptables_dest'] + '/' +
       hostvars[inventory_hostname]['netfilter_iptables_conf'] }}"
@@ -12,24 +12,24 @@
   - "hostvars[inventory_hostname]['netfilter'] is defined"
   - "hostvars[inventory_hostname]['netfilter'] != ''"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_mgmt']) is defined"
+     community.general.json_query(vars['netfilter_iptables_mgmt']) is defined"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_mgmt']) == 'true'"
+     community.general.json_query(vars['netfilter_iptables_mgmt']) == 'true'"
   vars:
     netfilter_iptables_mgmt: "[] | map(&iptables_mgmt || 'false', @) | [0]"
   notify:
   - "Restart iptables"
 - name: netfilter | Enable iptables
-  service:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
     enabled: "yes"
   when:
   - "hostvars[inventory_hostname]['netfilter'] is defined"
   - "hostvars[inventory_hostname]['netfilter'] != ''"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_enable']) is defined"
+     community.general.json_query(vars['netfilter_iptables_enable']) is defined"
   - "hostvars[inventory_hostname]['netfilter'] |
-     json_query(vars['netfilter_iptables_enable']) == 'true'"
+     community.general.json_query(vars['netfilter_iptables_enable']) == 'true'"
   vars:
     netfilter_iptables_enable: "[] | map(&iptables_enable || 'false', @) | [0]"
-- meta: flush_handlers
+- meta: "flush_handlers"
