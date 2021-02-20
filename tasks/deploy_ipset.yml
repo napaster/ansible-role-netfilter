@@ -8,27 +8,27 @@
     owner: "root"
     mode: "0644"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_ipset_mgmt']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_ipset_mgmt']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_ipset_mgmt']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_ipset_mgmt']) == 'true'"
   vars:
     netfilter_ipset_mgmt: "[] | map(&ipset_mgmt || 'false', @) | [0]"
   notify:
-  - "Restart ipset"
+    - "Restart ipset"
 - name: netfilter | Enable ipset
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_ipset_service'] }}"
     enabled: "yes"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_ipset_enable']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_ipset_enable']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_ipset_enable']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_ipset_enable']) == 'true'"
   vars:
     netfilter_ipset_enable: "[] | map(&ipset_enable || 'false', @) | [0]"
 - meta: flush_handlers

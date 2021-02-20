@@ -9,27 +9,27 @@
     mode: "0644"
     validate: "iptables-restore --test %s"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_iptables_mgmt']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_iptables_mgmt']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_iptables_mgmt']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_iptables_mgmt']) == 'true'"
   vars:
     netfilter_iptables_mgmt: "[] | map(&iptables_mgmt || 'false', @) | [0]"
   notify:
-  - "Restart iptables"
+    - "Restart iptables"
 - name: netfilter | Enable iptables
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_iptables_service'] }}"
     enabled: "yes"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_iptables_enable']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_iptables_enable']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_iptables_enable']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_iptables_enable']) == 'true'"
   vars:
     netfilter_iptables_enable: "[] | map(&iptables_enable || 'false', @) | [0]"
 - meta: "flush_handlers"

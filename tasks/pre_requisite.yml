@@ -11,5 +11,5 @@
     netfilter_arptables: "{{ hostvars[inventory_hostname]['netfilter'] |
       community.general.json_query('[].netfilter_settings[].arptables[]') }}"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"

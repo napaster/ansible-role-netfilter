@@ -8,27 +8,27 @@
     owner: "root"
     mode: "0644"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_arptables_mgmt']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_arptables_mgmt']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_arptables_mgmt']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_arptables_mgmt']) == 'true'"
   vars:
     netfilter_arptables_mgmt: "[] | map(&arptables_mgmt || 'false', @) | [0]"
   notify:
-  - "Restart arptables"
+    - "Restart arptables"
 - name: netfilter | Enable arptables
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['netfilter_arptables_service'] }}"
     enabled: "yes"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_arptables_enable']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_arptables_enable']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_arptables_enable']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_arptables_enable']) == 'true'"
   vars:
     netfilter_arptables_enable: "[] |
       map(&arptables_enable || 'false', @) | [0]"

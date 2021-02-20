@@ -9,6 +9,5 @@ netfilter_arptables_service: 'arptables'
 netfilter_arptables_dest: '/etc'
 netfilter_arptables_conf: 'arptables.conf'
 netfilter_packages:
-- 'iptables'
-- 'ipset'
-- 'arptables'
+  - 'iptables'
+  - 'ipset'

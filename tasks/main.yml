@@ -2,23 +2,23 @@
 - import_tasks: "pre_requisite.yml"
 - include_tasks: "packages.yml"
   when:
-  - "hostvars[inventory_hostname]['netfilter'] is defined"
-  - "hostvars[inventory_hostname]['netfilter'] != ''"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_install_package']) is defined"
-  - "hostvars[inventory_hostname]['netfilter'] |
-     community.general.json_query(vars['netfilter_install_package']) == 'true'"
+    - "hostvars[inventory_hostname]['netfilter'] is defined"
+    - "hostvars[inventory_hostname]['netfilter'] != ''"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_install_package']) is defined"
+    - "hostvars[inventory_hostname]['netfilter'] |
+       community.general.json_query(vars['netfilter_install_package']) == 'true'"
   vars:
     netfilter_install_package: "[] | map(&install_package || 'false', @) | [0]"
 - include_tasks: "deploy_ipset.yml"
   when:
-  - "vars['netfilter_ipset'] is defined"
-  - "vars['netfilter_ipset'] != []"
+    - "vars['netfilter_ipset'] is defined"
+    - "vars['netfilter_ipset'] != []"
 - include_tasks: "deploy_iptables.yml"
   when:
-  - "vars['netfilter_iptables'] is defined"
-  - "vars['netfilter_iptables'] != []"
+    - "vars['netfilter_iptables'] is defined"
+    - "vars['netfilter_iptables'] != []"
 - include_tasks: "deploy_arptables.yml"
   when:
-  - "vars['netfilter_arptables'] is defined"
-  - "vars['netfilter_arptables'] != []"
+    - "vars['netfilter_arptables'] is defined"
+    - "vars['netfilter_arptables'] != []"
