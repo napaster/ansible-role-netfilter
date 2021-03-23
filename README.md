@@ -4,7 +4,7 @@ Role for deploy netfilter rules via iptables/arptables/ipset.
 
 ## Requirements
 
-* Ansible 2.10+;
+* Ansible 3.0.0+;
 
 ## About iptables
 

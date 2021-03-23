@@ -1,7 +1,7 @@
 ---
 - name: netfilter | Add the OS specific variables
-  include_vars: "{{
-    hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+  ansible.builtin.include_vars:
+    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
 - name: netfilter | Set local facts
   ansible.builtin.set_fact:
     netfilter_ipset: "{{ hostvars[inventory_hostname]['netfilter'] |
