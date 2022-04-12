@@ -1,4 +1,4 @@
-{% if e.data is defined and e.data | ansible.netcommon.ipaddr('net') %}
+{% if e.data is defined and e.data | ansible.utils.ipaddr('net') %}
 {{ 'add ' + s.set + ' ' + e.data -}}
 {% if e.nomatch is defined and e.nomatch == 'true' %}
 {{- ' ' + 'nomatch' -}}

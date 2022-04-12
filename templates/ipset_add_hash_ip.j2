@@ -1,3 +1,3 @@
-{% if e.data is defined and e.data | ansible.netcommon.ipaddr() %}
+{% if e.data is defined and e.data | ansible.utils.ipaddr() %}
 {{ 'add ' + s.set + ' ' + e.data -}}
 {% endif %}

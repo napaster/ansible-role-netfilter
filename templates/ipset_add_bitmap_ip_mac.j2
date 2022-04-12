@@ -1,4 +1,4 @@
-{% if e.data | ansible.netcommon.ipaddr('host') and
-  e.macaddr | ansible.netcommon.hwaddr() %}
+{% if e.data | ansible.utils.ipaddr('host') and
+  e.macaddr | ansible.utils.hwaddr() %}
 {{ 'add ' + s.set + ' ' + e.data + ',' + e.macaddr -}}
 {% endif %}

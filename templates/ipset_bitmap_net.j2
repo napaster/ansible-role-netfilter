@@ -1,3 +1,3 @@
-{% if s.range is defined and s.range | ansible.netcommon.ipaddr('net') %}
+{% if s.range is defined and s.range | ansible.utils.ipaddr('net') %}
 {{ 'create ' + s.set + ' ' + s.type + ' range ' + s.range -}}
 {% endif %}
